@@ -224,6 +224,9 @@ const sum = (num1, num2) => num1 + num2;
 
 {
   // O(n)
-  const sumOfEvenSquares = numbers.filter(isEven).map(square).reduce(sum);
+  const sumOfEvenSquares = numbers //
+    .filter(isEven)
+    .map(square)
+    .reduce(sum);
   console.log(sumOfEvenSquares);
 }
