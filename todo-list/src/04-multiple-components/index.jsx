@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import Form from "./form";
@@ -17,13 +17,16 @@ const NEXT_ID = 1;
 function App({ who }) {
   const [tasks, setTasks] = useState(DEFAULT_TASKS);
 
-  const handleSubmit = (text) =>
-    setTasks((tasks) => {
-      const maxId = tasks.length
-        ? tasks[tasks.length - LAST_ITEM].id
-        : LOWEST_ID;
-      return [...tasks, { id: maxId + NEXT_ID, text }];
-    });
+  const handleSubmit = useCallback(
+    (text) =>
+      setTasks((tasks) => {
+        const maxId = tasks.length
+          ? tasks[tasks.length - LAST_ITEM].id
+          : LOWEST_ID;
+        return [...tasks, { id: maxId + NEXT_ID, text }];
+      }),
+    []
+  );
 
   const handleSpanClick = (id) =>
     setTasks((tasks) =>
