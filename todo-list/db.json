@@ -6,18 +6,17 @@
       "completed": true
     },
     {
-      "id": 2,
-      "text": "Look for a job",
+      "id": 3,
+      "text": "Forget everything",
       "completed": false
     },
     {
-      "id": 3,
-      "text": "Forget everything"
+      "text": "Hello",
+      "id": 5
     },
     {
-      "text": "Hello world!",
-      "id": 4,
-      "completed": true
+      "text": "Change",
+      "id": 6
     }
   ]
 }

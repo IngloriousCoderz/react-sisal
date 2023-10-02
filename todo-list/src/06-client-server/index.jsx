@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { fetchTasks, createTask, deleteTask, updateTask } from "./service/api";
+import * as api from "./service/api";
 
 import Form from "./form";
 import List from "./list";
@@ -12,7 +12,7 @@ function App({ who }) {
   const [tasks, setTasks] = useState(DEFAULT_TASKS);
 
   useEffect(() => {
-    fetchTasks().then(setTasks);
+    api.fetchTasks().then(setTasks);
   }, []);
 
   // useEffect(() => {
@@ -25,20 +25,22 @@ function App({ who }) {
   // }, []);
 
   const handleSubmit = async (text) => {
-    const createdTask = await createTask({ text });
+    const createdTask = await api.createTask({ text });
     setTasks((tasks) => [...tasks, createdTask]);
   };
 
   const handleSpanClick = async (id) => {
     const task = tasks.find((task) => task.id === id);
-    const updatedTask = await updateTask(id, { completed: !task.completed });
+    const updatedTask = await api.updateTask(id, {
+      completed: !task.completed,
+    });
     setTasks((tasks) =>
       tasks.map((task) => (task.id === id ? updatedTask : task))
     );
   };
 
   const handleButtonClick = async (id) => {
-    await deleteTask(id);
+    await api.deleteTask(id);
     setTasks((tasks) => tasks.filter((task) => task.id !== id));
   };
 

@@ -1,22 +1,36 @@
-/* eslint-disable react-refresh/only-export-components */
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import classes from "./list.module.css";
+import { fetchTasks, taskDeleted, taskToggled } from "../business-logic/thunks";
+import { selectTasks } from "../business-logic/selectors";
+import { useEffect } from "react";
 
 // presentational component
 
-function List({ tasks, onSpanClick, onButtonClick }) {
+function List() {
+  const tasks = useSelector(selectTasks);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
+  const handleSpanClick = (id) => dispatch(taskToggled(id));
+
+  const handleButtonClick = (id) => dispatch(taskDeleted(id));
+
   return (
     <ul>
       {tasks.map(({ id, text, completed }) => (
         <li key={id}>
           <span
             className={completed ? classes.isCompleted : null}
-            onClick={() => onSpanClick(id)}
+            onClick={() => handleSpanClick(id)}
           >
             {text}
           </span>
           &nbsp;
-          <button onClick={() => onButtonClick(id)}>x</button>
+          <button onClick={() => handleButtonClick(id)}>x</button>
         </li>
       ))}
     </ul>

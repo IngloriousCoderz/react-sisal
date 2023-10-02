@@ -1,19 +1,20 @@
-/* eslint-disable react-refresh/only-export-components */
-import { useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { textChanged } from "./text.slice";
+import { selectText } from "../business-logic/selectors";
+import { taskAdded } from "../business-logic/thunks";
 
 // container component
 
-function Form({ onSubmit }) {
-  console.log("form render");
-  const [text, setText] = useState("");
+function Form() {
+  const text = useSelector(selectText);
+  const dispatch = useDispatch();
 
-  const handleChange = (event) => setText(event.target.value);
+  const handleChange = (event) => dispatch(textChanged(event.target.value));
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setText("");
-    onSubmit(text);
+    dispatch(taskAdded(text));
   };
 
   return (
